@@ -1,17 +1,30 @@
 import React from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./Components/Navbar";
+import HomePage from "./Pages/HomePage";
+import LoginPage from "./Pages/LoginPage";
+import NotFoundPage from "./Pages/NotFoundPage";
+import RouteProtecter from "./Pages/RouteProtecter";
+import store from "./Redux/store/store";
 
 function App() {
 	return (
-		<div className='App'>
-			<header className='App-header'>
-				<p>
-					Edit <code>src/App.tsx</code> and save to reload.
-				</p>
-				<a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
-					Learn React
-				</a>
-			</header>
-		</div>
+		<Provider store={store}>
+			<BrowserRouter>
+				{/* <Navbar /> */}
+				<Routes>
+					{/* AUTH PAGES */}
+					<Route path='/' element={<HomePage />} />
+					<Route path='/admin-cms-login' element={<LoginPage />} />
+					{/* ADMIN PAGES */}
+					<Route path='/admin-cms' element={<RouteProtecter />}>
+						{/* <Route path='dashboard' element={<Dashboard />} /> */}
+					</Route>
+					<Route path='*' element={<NotFoundPage />} />
+				</Routes>
+			</BrowserRouter>
+		</Provider>
 	);
 }
 
